@@ -18,3 +18,14 @@ class BookForm(forms.ModelForm):
         }
         
         
+class BookCategoryForm(forms.ModelForm):
+    class Meta:
+        model = BookCategory
+        exclude = ('created_at',)
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'slug': forms.TextInput(attrs={'class': 'form-control'}),
+            'status': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+        
+        

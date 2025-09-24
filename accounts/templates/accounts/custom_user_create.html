@@ -1,0 +1,126 @@
+{% extends "admin/_base.html" %}
+{% load static %}
+{% block content_admin %}
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title fw-semibold mb-4">Create User</h5>
+    <div class="card">
+      <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label class="form-label">First Name</label>
+            {{ form.first_name }}
+            {% if form.first_name.errors %}
+              <div class="text-danger">{{ form.first_name.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Last Name</label>
+            {{ form.last_name }}
+            {% if form.last_name.errors %}
+              <div class="text-danger">{{ form.last_name.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Username</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+              <div class="text-danger">{{ form.username.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+              <div class="text-danger">{{ form.email.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Phone Number</label>
+            {{ form.phone_number }}
+            {% if form.phone_number.errors %}
+              <div class="text-danger">{{ form.phone_number.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Profile Picture</label>
+            {{ form.profile_pic }}
+            {% if form.profile_pic.errors %}
+              <div class="text-danger">{{ form.profile_pic.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Birth Date</label>
+            {{ form.birth_date }}
+            {% if form.birth_date.errors %}
+              <div class="text-danger">{{ form.birth_date.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Password Fields -->
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            {{ form.password1 }}
+            {% if form.password1.errors %}
+              <div class="text-danger">{{ form.password1.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Confirm Password</label>
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+              <div class="text-danger">{{ form.password2.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Role & Status -->
+          <div class="mb-3">
+            <label class="form-label">Owner</label>
+            {{ form.is_owner }}
+            {% if form.is_owner.errors %}
+              <div class="text-danger">{{ form.is_owner.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Superuser</label>
+            {{ form.is_superuser }}
+            {% if form.is_superuser.errors %}
+              <div class="text-danger">{{ form.is_superuser.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Staff</label>
+            {{ form.is_staff }}
+            {% if form.is_staff.errors %}
+              <div class="text-danger">{{ form.is_staff.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Active</label>
+            {{ form.is_active }}
+            {% if form.is_active.errors %}
+              <div class="text-danger">{{ form.is_active.errors.0 }}</div>
+            {% endif %}
+          </div>
+
+          <button type="submit" class="btn btn-primary">Create User</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content_admin %}

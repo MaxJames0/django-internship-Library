@@ -1,0 +1,71 @@
+{% extends "admin/_base.html" %}
+{% load static %}
+
+{% block content_admin %}
+<div class="col-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="d-md-flex align-items-center">
+        <div>
+          <h4 class="card-title">Products Performance</h4>
+          <p class="card-subtitle">
+            Ample Admin Vs Pixel Admin
+          </p>
+        </div>
+        <div class="ms-auto mt-3 mt-md-0">
+          <select class="form-select theme-select border-0" aria-label="Default select example">
+            <option value="1">March 2025</option>
+            <option value="2">March 2025</option>
+            <option value="3">March 2025</option>
+          </select>
+        </div>
+      </div>
+      <div class="table-responsive mt-4">
+        <table class="table mb-0 text-nowrap varient-table align-middle fs-3">
+          <thead>
+            <tr>
+              <th scope="col" class="px-0 text-muted">
+                Name
+              </th>
+              <th scope="col" class="px-0 text-muted text-end">
+                Created At
+              </th>
+              <th scope="col" class="px-0 text-muted text-end">
+                Status
+              </th>
+              <th scope="col" class="px-0 text-muted text-end">
+                Operation
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for cat in book_categories %}
+            <tr>
+              <td class="px-0">
+                <div class="d-flex align-items-center">
+                  <div>
+                    <h6 class="mb-0 fw-bolder">{{ cat.name }}</h6>  
+                    <span class="text-muted">{{ cat.slug }}</span>
+                  </div>
+                </div>
+              </td>
+              <td class="px-0 text-dark fw-medium text-end">
+                {{ cat.jcreated_at }}
+              </td>
+              <td class="px-0 text-dark fw-medium text-end">
+                {{ cat.status }}
+              </td>
+              <td class="px-0 text-dark fw-medium text-end">
+                <a class="btn btn-warning" href="{% url "books:book_update_category_dashboard" cat.pk %}">Update</a>
+                |
+                <a class="btn btn-danger" href="{% url "books:book_delete_category_confirm_dashboard" cat.pk %}">Delete</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content_admin %}

@@ -1,0 +1,12 @@
+{% extends "admin/_base.html" %}
+{% block content_admin %}
+<div class="container mt-4">
+  <h2>Delete Category</h2>
+  <p>You Sure you want to delete "<strong>{{ object.name }}</strong>"?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, delete it</button>
+    <a href="{% url 'books:book_category_list_dashboard' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

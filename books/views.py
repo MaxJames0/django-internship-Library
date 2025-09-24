@@ -48,3 +48,31 @@ class BookDashboardDelete(DeleteView):
     template_name = "books/book_delete_confirm_dashboard.html"
     model = Book
     success_url = reverse_lazy('books:books-list-dashboard')
+    
+
+class BookCategoryDashboardList(ListView):
+    template_name = 'books/book_category_list_dashboard.html'
+    model = BookCategory
+    context_object_name = 'book_categories'
+
+
+class BookCategoryDashboardCreate(CreateView):
+    template_name = 'books/book_create_category_dashboard.html'
+    model = BookCategory
+    form_class = BookCategoryForm
+    success_url = reverse_lazy('books:book_category_list_dashboard')
+    
+
+class BookCategoryDashboardUpdate(UpdateView):
+    template_name = "books/book_update_category_dashboard.html"
+    model = BookCategory
+    form_class = BookCategoryForm
+    success_url = reverse_lazy('books:book_category_list_dashboard')
+    
+
+class BookCategoryDashboardDelete(DeleteView):
+    template_name = "books/book_delete_category_confirm_dashboard.html"
+    model = BookCategory
+    success_url = reverse_lazy('books:book_category_list_dashboard')
+
+
