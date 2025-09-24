@@ -1,0 +1,87 @@
+{% extends "admin/_base.html" %}
+{% load static %}
+
+{% block content_admin %}
+<div class="col-12">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title fw-semibold mb-4">Update Book</h5>
+      <div class="card">
+        <div class="card-body">
+          <!-- Ensure method=post and csrf_token -->
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3">
+              <label class="form-label">Title</label>
+              {{ form.title }}
+              {% if form.title.errors %}
+                <div class="text-danger">{{ form.title.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Slug</label>
+              {{ form.slug }}
+              {% if form.slug.errors %}
+                <div class="text-danger">{{ form.slug.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Description</label>
+              {{ form.desc }}
+              {% if form.desc.errors %}
+                <div class="text-danger">{{ form.desc.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Category</label>
+              {{ form.categories }}
+              {% if form.categories.errors %}
+                <div class="text-danger">{{ form.categories.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Author</label>
+              {{ form.author }}
+              {% if form.author.errors %}
+                <div class="text-danger">{{ form.author.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Content</label>
+              {{ form.content }}
+              {% if form.content.errors %}
+                <div class="text-danger">{{ form.content.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Cover Image</label>
+              {{ form.cover_image }}
+              {% if form.cover_image.errors %}
+                <div class="text-danger">{{ form.cover_image.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="mb-3 form-check">
+              {{ form.is_published }}
+              <label class="form-check-label">Published</label>
+              {% if form.is_published.errors %}
+                <div class="text-danger">{{ form.is_published.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <!-- Make sure button type is submit -->
+            <button type="submit" class="btn btn-primary">Update Book</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content_admin %}

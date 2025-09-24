@@ -64,8 +64,8 @@
                 {{ book.is_published }}
               </td>
               <td class="px-0 text-dark fw-medium text-end">
-                <a class="btn btn-warning" href="#">Update</a> |
-                <a class="btn btn-danger" href="#">Delete</a>
+                <a class="btn btn-warning" href="{% url "books:update-book-dashboard" book.pk %}">Update</a> |
+                <a class="btn btn-danger" href="{% url "books:delete-book" book.pk %}">Delete</a>
               </td>
             </tr>
             {% endfor %}
