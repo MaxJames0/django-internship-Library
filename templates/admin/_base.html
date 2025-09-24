@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flexy Free Bootstrap Admin Template by WrapPixel</title>
+  {% include "admin/_header.html" %}
+</head>
+
+<body>
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+
+    <!--  App Topstrip -->
+    {% include "./inc/header.html" %}
+
+    <!-- Sidebar Start -->
+    {% include "./inc/sidebar.html" %}
+    <!-- Sidebar End -->
+
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+      <div class="body-wrapper-inner">
+        <div class="container-fluid">
+          <!-- Main Content Row -->
+          <div class="row">
+            {% block content_admin %}{% endblock content_admin %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  {% include "admin/_footer.html" %}
+</body>
+
+</html>

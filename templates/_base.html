@@ -1,0 +1,47 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="megakit,business,company,agency,multipurpose,modern,bootstrap4">
+  
+  <meta name="author" content="themefisher.com">
+
+  <title>Megakit| Html5 Agency template</title>
+
+{% include "./_header.html" %}
+
+</head>
+
+<body>
+
+
+<!-- Header Start --> 
+
+{% include "./inc/navbar.html" %}
+
+<!-- Header Close --> 
+
+<div class="main-wrapper ">
+
+
+	{% block content %}{% endblock content %}
+	
+
+<!-- footer Start -->
+{% include "./inc/footer.html" %}
+   
+    </div>
+
+    <!-- 
+    Essential Scripts
+    =====================================-->
+
+    
+{% include "./_footer.html" %}
+
+  </body>
+  </html>
+   
