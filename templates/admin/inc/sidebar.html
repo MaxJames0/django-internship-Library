@@ -13,22 +13,13 @@
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
           <ul id="sidebarnav">
-            <li class="nav-small-cap">
-              <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
-              <span class="hide-menu">Home</span>
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="#" aria-expanded="false">
-                <i class="ti ti-atom"></i>
-                <span class="hide-menu">Dashboard</span>
-              </a>
-            </li>
+
             <!-- ---------------------------------- -->
             <!-- Dashboard -->
             <!-- ---------------------------------- -->
             <li class="sidebar-item">
               <a class="sidebar-link justify-content-between"  
-                href="#" aria-expanded="false">
+                href="{% url "accounts:profile" %}" aria-expanded="false">
                 <div class="d-flex align-items-center gap-3">
                   <span class="d-flex">
                     <i class="ti ti-aperture"></i>
@@ -51,7 +42,7 @@
               <ul aria-expanded="false" class="collapse first-level">
                 <li class="sidebar-item">
                   <a class="sidebar-link justify-content-between"  
-                    href="#">
+                    href="{% url "books:books-list-dashboard" %}">
                     <div class="d-flex align-items-center gap-3">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
@@ -63,7 +54,7 @@
                 </li>
                                 <li class="sidebar-item">
                   <a class="sidebar-link justify-content-between"  
-                    href="#">
+                    href="{% url "books:create-book-dashboard" %}">
                     <div class="d-flex align-items-center gap-3">
                       <div class="round-16 d-flex align-items-center justify-content-center">
                         <i class="ti ti-circle"></i>
@@ -154,7 +145,7 @@
 
             <li class="sidebar-item">
               <a class="sidebar-link justify-content-between"  
-                href="#" aria-expanded="false">
+                href="{% url "accounts:logout" %}" aria-expanded="false">
                 <div class="d-flex align-items-center gap-3">
                   <span class="d-flex">
                     <i class="ti ti-aperture"></i>

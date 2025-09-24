@@ -23,7 +23,7 @@ class RegisterView(CreateView):
 class LoginView(BaseLoginView):
     form_class = LoginForm
     template_name = 'accounts/login.html'
-    next_page = reverse_lazy('core:home')
+    next_page = reverse_lazy('accounts:profile')
     
     def get_initial(self):
         initial = super().get_initial()
@@ -35,3 +35,11 @@ class LoginView(BaseLoginView):
     
 class ProfileView(TemplateView, LoginRequiredMixin):
     template_name = "accounts/profile.html"  
+    
+    
+class LogoutView(LoginRequiredMixin, View):
+    def get(self, request):
+        logout(request)
+        return redirect('accounts:login')
+
+
