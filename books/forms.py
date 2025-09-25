@@ -29,3 +29,14 @@ class BookCategoryForm(forms.ModelForm):
         }
         
         
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = CommentBook
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'class': 'form-control mb-3',
+                'rows': 5,
+                'placeholder': 'Write your comment...'
+            }),
+        }

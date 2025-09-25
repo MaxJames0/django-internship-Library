@@ -52,3 +52,14 @@ class Book(models.Model):
     def jcreated_at(self):
         return jalali_converter(self.created_at)
     jcreated_at.short_description = "ساخته شده در"
+    
+    
+class CommentBook(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='author')
+    
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f'{self.user} | {self.book.title[:10]}'

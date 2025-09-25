@@ -74,5 +74,66 @@ class BookCategoryDashboardDelete(DeleteView):
     template_name = "books/book_delete_category_confirm_dashboard.html"
     model = BookCategory
     success_url = reverse_lazy('books:book_category_list_dashboard')
+    
+    
+class BookList(ListView):
+    template_name = "./books/books.html"
+    model = Book
+    context_object_name = 'books'
+    paginate_by = 2
+    
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-created_at')
+        query = self.request.GET.get('q')
+        if query:
+            queryset = queryset.filter(
+                Q(title__icontains=query) | Q(content__icontains=query)
+            )
+        return queryset
 
 
+class BookDetail(DetailView):
+    model = Book
+    template_name = 'books/detail.html'
+    context_object_name = 'book'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        book = self.get_object()
+
+        # Next book by creation date
+        context['next_book'] = Book.objects.filter(
+            created_at__gt=book.created_at, is_published=True
+        ).order_by('created_at').first()
+
+        # Previous book by creation date
+        context['previous_book'] = Book.objects.filter(
+            created_at__lt=book.created_at, is_published=True
+        ).order_by('-created_at').first()
+
+        # Latest 3 published books
+        context['latest_books'] = Book.objects.filter(
+            is_published=True
+        ).order_by('-created_at')[:3]
+
+        # All categories
+        context['all_categories'] = BookCategory.objects.all()
+
+        # Comment form
+        context['form'] = CommentForm()
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.book = self.object     # assign the current book
+            comment.user = request.user    # assign the logged-in user
+            comment.save()
+            return redirect("books:detail-book", pk=self.object.pk, slug=self.object.slug)
+        context = self.get_context_data()
+        context["form"] = form
+        return self.render_to_response(context)
+    

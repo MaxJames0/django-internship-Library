@@ -29,3 +29,15 @@ class BookAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
     actions = [active_status, deactive_status]
     
+
+@admin.register(CommentBook)
+class CommentBookAdmin(admin.ModelAdmin):
+    list_display = ('user', 'book', 'comment', 'created_at')
+    search_fields = ('user__username', 'user__first_name', 'user__last_name', 'content', 'book__title')
+    list_filter = ('created_at',)
+    ordering = ('-created_at',)
+
+    def comment(self, obj):
+        return obj.content[:50] + ('...' if len(obj.content) > 50 else '')
+    comment.short_description = 'Comment'
+    
