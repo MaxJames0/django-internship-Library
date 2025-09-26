@@ -1,0 +1,82 @@
+{% extends "admin/_base.html" %}
+{% load static %}
+
+{% block content_admin %}
+<div class="col-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="d-md-flex align-items-center">
+        <div>
+          <h4 class="card-title">Borrowed Books</h4>
+          <p class="card-subtitle">
+            List of all borrowed books
+          </p>
+        </div>
+        <div class="ms-auto mt-3 mt-md-0">
+          <!-- Ordering filter -->
+          <form method="get">
+            <select name="order" class="form-select theme-select border-0" onchange="this.form.submit()">
+              <option value="asc" {% if request.GET.order == 'asc' %}selected{% endif %}>Borrowed At Ascending</option>
+              <option value="desc" {% if request.GET.order == 'desc' or not request.GET.order %}selected{% endif %}>Borrowed At Descending</option>
+            </select>
+          </form>
+        </div>
+      </div>
+
+      <!-- Scrollable table -->
+      <div class="table-responsive mt-4" style="max-height: 800px; overflow-y: auto;">
+        <table class="table mb-0 text-nowrap varient-table align-middle fs-3">
+          <thead>
+            <tr>
+              <th scope="col" class="px-0 text-muted">Book Title</th>
+              <th scope="col" class="px-0 text-muted">Borrowed By</th>
+              <th scope="col" class="px-0 text-muted text-end">Borrowed At</th>
+              <th scope="col" class="px-0 text-muted text-end">Status</th>
+              <th scope="col" class="px-0 text-muted text-end">Operation</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for borrow in borrows %}
+            <tr>
+              <td class="px-0">
+                <div class="d-flex align-items-center">
+                  <img src="{{ borrow.book.cover_image.url }}" 
+                       class="rounded-circle object-fit-cover border shadow-sm" 
+                       width="50" height="50" 
+                       alt="{{ borrow.book.title }}">
+                  <div class="ms-3">
+                    <h6 class="mb-0 fw-bolder">{{ borrow.book.title }}</h6>
+                    <span class="text-muted">{{ borrow.book.slug }}</span>
+                  </div>
+                </div>
+              </td>
+              <td class="px-0">{{ borrow.user.get_full_name|default:borrow.user.username }}</td>
+              <td class="px-0 text-dark fw-medium text-end">{{ borrow.jborrowed_at }}</td>
+              <td class="px-0 text-dark fw-medium text-end">
+                {% if borrow.returned %}
+                  <span class="text-success">Returned</span>
+                {% else %}
+                  <span class="text-danger">Borrowed</span>
+                {% endif %}
+              </td>
+              <td class="px-0 text-dark fw-medium text-end">
+                {% if not borrow.returned %}
+                    <form action="{% url 'books:return-borrowed-book' borrow.pk %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success">Mark as Returned</button>
+                    </form>
+                {% endif %}
+              </td>
+            </tr>
+            {% empty %}
+              <tr>
+                <td colspan="5" class="text-center">No borrowed books found.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content_admin %}

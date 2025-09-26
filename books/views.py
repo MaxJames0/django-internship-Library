@@ -2,7 +2,11 @@ from pyexpat import model
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.views import View
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect 
 
 from books.forms import *
 from books.models import *
@@ -101,21 +105,6 @@ class BookDetail(DetailView):
         context = super().get_context_data(**kwargs)
         book = self.get_object()
 
-        # Next book by creation date
-        context['next_book'] = Book.objects.filter(
-            created_at__gt=book.created_at, is_published=True
-        ).order_by('created_at').first()
-
-        # Previous book by creation date
-        context['previous_book'] = Book.objects.filter(
-            created_at__lt=book.created_at, is_published=True
-        ).order_by('-created_at').first()
-
-        # Latest 3 published books
-        context['latest_books'] = Book.objects.filter(
-            is_published=True
-        ).order_by('-created_at')[:3]
-
         # All categories
         context['all_categories'] = BookCategory.objects.all()
 
@@ -137,3 +126,41 @@ class BookDetail(DetailView):
         context["form"] = form
         return self.render_to_response(context)
     
+    
+class BorrowBookView(LoginRequiredMixin, View):
+    login_url = 'accounts/login/'  # redirect here if not logged in
+
+    def post(self, request, pk, *args, **kwargs):
+        book = get_object_or_404(Book, pk=pk)
+
+        if book.is_borrowed:
+            messages.error(request, "Sorry, this book is already borrowed by another user.")
+        else:
+            Borrow.objects.create(book=book, user=request.user)
+            messages.success(request, "You have successfully borrowed this book.")
+
+        return redirect('books:detail-book', pk=book.pk, slug=book.slug)
+    
+    
+class BorrowedBooksDashboardView(LoginRequiredMixin, ListView):
+    model = Borrow
+    template_name = 'books/borrowed_books_dashboard.html'
+    context_object_name = 'borrows'
+    ordering = ['-borrowed_at']
+
+    def get_queryset(self):
+        qs = super().get_queryset().filter(returned=False)
+        order = self.request.GET.get('order', 'asc')  # default ascending
+        if order == 'desc':
+            qs = qs.order_by('-borrowed_at')
+        else:
+            qs = qs.order_by('borrowed_at')
+        return qs
+    
+
+class ReturnBorrowedBookView(LoginRequiredMixin, View):
+    def post(self, request, pk, *args, **kwargs):
+        borrow = get_object_or_404(Borrow, pk=pk, returned=False)
+        borrow.returned = True
+        borrow.save()
+        return redirect('books:borrowed-books-dashboard')

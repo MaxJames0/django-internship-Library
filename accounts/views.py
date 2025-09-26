@@ -89,3 +89,5 @@ class UserCustomCreateView(CreateView):
     def form_invalid(self, form):
         print(form.errors)  # debug in terminal
         return super().form_invalid(form)
+    
+

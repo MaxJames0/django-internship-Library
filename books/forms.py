@@ -12,10 +12,10 @@ class BookForm(forms.ModelForm):
             'desc': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'categories': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'author': forms.TextInput(attrs={'class': 'form-control'}),
-            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
             'cover_image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
             'is_published': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
+
         
         
 class BookCategoryForm(forms.ModelForm):
