@@ -87,13 +87,14 @@ class BookList(ListView):
     paginate_by = 2
     
     def get_queryset(self):
-        queryset = super().get_queryset().order_by('-created_at')
+        queryset = super().get_queryset().filter(is_published=True).order_by('-created_at')
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
-                Q(title__icontains=query) | Q(content__icontains=query)
+                Q(title__icontains=query) | Q(desc__icontains=query)
             )
         return queryset
+
 
 
 class BookDetail(DetailView):
